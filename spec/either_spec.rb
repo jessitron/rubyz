@@ -8,4 +8,16 @@ describe Either do
     subject.left("I hate you").left?.should be_true
   end
 
+  it 'left is not a right' do
+    subject.left("I hate you").right?.should be_false
+  end
+
+  it 'can hold a right' do
+    subject.right("I love you").right?.should be_true
+  end
+
+  it 'right is not a left' do
+    subject.right("I love you").left?.should be_false
+  end
+
 end

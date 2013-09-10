@@ -1,19 +1,39 @@
-class Either
+module Either
 
   def self.left(leftval)
-    new(left: leftval)
+    Left.new(leftval)
   end
-
-
-   attr_reader :left, :right
-   def initialize(left: :none, right: :none)
-      raise ArgumentError.new("Either a right or an left please, not both") if (right != :none and left != :none)
-      raise ArgumentError.new("Either a right or an left please, please give me one") if (right == :none and left == :none)
-      @right = right
-      @left = left
-   end
+  def self.right(rightval)
+    Right.new(rightval)
+  end
 
    def left?
      @left != :none
    end
+
+   def right?
+     @left == :none
+   end
+
+
+end
+
+private
+class Left
+  include Either
+  def initialize(val)
+    @val = val
+  end
+
+  def left?; true end
+  def right?; false end
+end
+class Right
+  include Either
+  def initialize(val)
+    @val = val
+  end
+
+  def left?; false end
+  def right?; true end
 end
