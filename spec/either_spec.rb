@@ -20,12 +20,16 @@ describe Either do
     subject.right("I love you").left?.should be_false
   end
 
-  it 'is enumerable, with left being empty' do
+  it 'can be converted to enumerable, with left being empty' do
     expect(subject.left(4).to_a).to eq([])
   end
 
-  it 'is enumerable, with right being empty' do
+  it 'can be converted to enumerable, with right having one item' do
     expect(subject.right(4).to_a).to eq([4])
+  end
+
+  it 'maps on a right' do
+    # expect(subject.right(4).map {|a| a + 1}).to eq(subject.right(5))
   end
 
 end
