@@ -20,4 +20,8 @@ describe Either do
     subject.right("I love you").left?.should be_false
   end
 
+  it 'is enumerable, with left being empty' do
+    expect(subject.left(4).to_a).to eq([])
+  end
+
 end
