@@ -24,4 +24,8 @@ describe Either do
     expect(subject.left(4).to_a).to eq([])
   end
 
+  it 'is enumerable, with right being empty' do
+    expect(subject.right(4).to_a).to eq([4])
+  end
+
 end
