@@ -7,15 +7,6 @@ module Either
     Right.new(rightval)
   end
 
-   def left?
-     @left != :none
-   end
-
-   def right?
-     @left == :none
-   end
-
-
 end
 
 private
@@ -27,6 +18,8 @@ class Left
 
   def left?; true end
   def right?; false end
+
+  def to_a; [] end
 end
 class Right
   include Either
@@ -36,4 +29,7 @@ class Right
 
   def left?; false end
   def right?; true end
+
+  def to_a; [@val] end
+
 end
