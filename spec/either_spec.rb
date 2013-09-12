@@ -38,4 +38,12 @@ describe Either do
     expect(subject.left("boo").left_transform(->(s) { s * 2 })).to eq(subject.left("booboo"))
   end
 
+  it 'does nothing when we map a left' do
+    expect(subject.left(2).send(what_shall_we_call_map, ->(a) { a + 1})).to eq(subject.left(2))
+  end
+
+  it 'does nothing when we left-map a right' do
+    expect(subject.right(2).left_transform( ->(a) { a + 1})).to eq(subject.right(2))
+  end
+
 end
