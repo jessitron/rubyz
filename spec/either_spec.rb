@@ -35,7 +35,7 @@ describe Either do
   end
 
   it 'can also map a left' do
-    expect(subject.left("boo)")).to eq(subject.left("boo"))
+    expect(subject.left("boo").left_transform(->(s) { s * 2 })).to eq(subject.left("booboo"))
   end
 
 end
