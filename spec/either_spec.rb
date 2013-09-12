@@ -3,6 +3,7 @@ require_relative '../lib/either'
 describe Either do
 
   what_shall_we_call_map = :transform
+  flatmap = :morph
 
   subject { described_class }
 
@@ -45,5 +46,19 @@ describe Either do
   it 'does nothing when we left-map a right' do
     expect(subject.right(2).left_transform( ->(a) { a + 1})).to eq(subject.right(2))
   end
+
+  it 'flatmaps a right' do
+    expect(subject.right("a").send(flatmap, ->(a) { subject.right(a * 2)})).to eq(subject.right("aa"))
+  end
+
+  it 'flatmaps a right to a left' do
+    expect(subject.right("a").send(flatmap, ->(a) { subject.left("boo " + a)})).to eq(subject.left("boo a"))
+  end
+
+  it 'does nothing when we flatmap a left' do
+    expect(subject.left("b").send(flatmap, ->(a) { subject.left("yoyo")})).to eq(subject.left("b"))
+  end
+
+
 
 end
