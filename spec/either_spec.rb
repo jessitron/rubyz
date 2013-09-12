@@ -65,16 +65,11 @@ describe Either do
   times_two = ->(a) { a * 2 }
 
   it 'can fold a right into a value' do
-    expect(subject.right("me").fold(left = dont_call_this, right = times_two)).to eq("meme")
+    expect(subject.right("me").fold(dont_call_this, times_two)).to eq("meme")
   end
 
-  # HEY MARIO why doesn't this work?
-  #it 'can fold a left into a value with named args reversed' do
-    #expect(subject.left("me").fold(right = dont_call_this, left = times_two)).to eq("meme")
-  #end
-
   it 'can fold a left into a value' do
-    expect(subject.left("me").fold(left = times_two, right = dont_call_this)).to eq("meme")
+    expect(subject.left("me").fold(times_two, dont_call_this)).to eq("meme")
   end
 
 
