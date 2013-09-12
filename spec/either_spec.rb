@@ -61,5 +61,21 @@ describe Either do
     # I need a type error here. Help me with the text syntax
   end
 
+  dont_call_this = ->(a) { raise "Unexpected method call" }
+  times_two = ->(a) { a * 2 }
+
+  it 'can fold a right into a value' do
+    expect(subject.right("me").fold(left = dont_call_this, right = times_two)).to eq("meme")
+  end
+
+  # HEY MARIO why doesn't this work?
+  #it 'can fold a left into a value with named args reversed' do
+    #expect(subject.left("me").fold(right = dont_call_this, left = times_two)).to eq("meme")
+  #end
+
+  it 'can fold a left into a value' do
+    expect(subject.left("me").fold(left = times_two, right = dont_call_this)).to eq("meme")
+  end
+
 
 end

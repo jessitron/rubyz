@@ -7,6 +7,8 @@ module Either
     Right.new(rightval)
   end
 
+  def transform(f); self end
+  def left_transform(f); self end
 end
 
 private
@@ -20,6 +22,22 @@ class Left
   def right?; false end
 
   def to_a; [] end
+
+  def left_transform(f)
+    Left.new(f.call(@val))
+  end
+
+  def fold (left, right)
+    left.call(@val)
+  end
+
+  def == (other)
+    other.is_a?(Left) && other.leftval == @val
+  end
+
+  # should this be public?
+  def leftval; @val end
+
 end
 class Right
   include Either
@@ -31,5 +49,23 @@ class Right
   def right?; true end
 
   def to_a; [@val] end
+
+  def transform(f)
+    Right.new(f.call(@val))
+  end
+
+  def == (other)
+    other.is_a?(Right) && other.val == @val
+  end
+
+  def flatten
+    @val
+  end
+
+  def fold (left, right)
+    right.call(@val)
+  end
+
+  attr_reader :val
 
 end
