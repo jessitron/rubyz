@@ -47,18 +47,19 @@ describe Either do
     expect(subject.right(2).left_transform( ->(a) { a + 1})).to eq(subject.right(2))
   end
 
-  it 'flatmaps a right' do
-    expect(subject.right("a").send(flatmap, ->(a) { subject.right(a * 2)})).to eq(subject.right("aa"))
+  it 'can flatten a right of a right' do
+    innerRight = subject.right("inner")
+    expect(subject.right(innerRight).flatten).to eq(innerRight)
   end
 
-  it 'flatmaps a right to a left' do
-    expect(subject.right("a").send(flatmap, ->(a) { subject.left("boo " + a)})).to eq(subject.left("boo a"))
+  it 'can flatten a right of a left' do
+    innerLeft = subject.left("inner failure")
+    expect(subject.right(innerLeft).flatten).to eq(innerLeft)
   end
 
-  it 'does nothing when we flatmap a left' do
-    expect(subject.left("b").send(flatmap, ->(a) { subject.left("yoyo")})).to eq(subject.left("b"))
+  it 'cannot flatten if there is not an inner Either' do
+    # I need a type error here. Help me with the text syntax
   end
-
 
 
 end
