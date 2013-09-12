@@ -2,6 +2,8 @@ require_relative '../lib/either'
 
 describe Either do
 
+  what_shall_we_call_map = :transform
+
   subject { described_class }
 
   it 'can hold a left' do
@@ -29,7 +31,11 @@ describe Either do
   end
 
   it 'maps on a right' do
-    # expect(subject.right(4).map {|a| a + 1}).to eq(subject.right(5))
+     expect(subject.right(4).send(what_shall_we_call_map, ->(a) { a + 1})).to eq(subject.right(5))
+  end
+
+  it 'can also map a left' do
+    expect(subject.left("boo)")).to eq(subject.left("boo"))
   end
 
 end
